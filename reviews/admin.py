@@ -20,3 +20,4 @@ admin.site.register(Comment)
 admin.site.unregister(Group)
 
 admin.site.site_header = "Product Review Admin"
+
