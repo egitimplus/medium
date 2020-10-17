@@ -1,7 +1,7 @@
-from .serializers import ProductSerializer
-from .models import Product
+from .serializers import ProductSerializer, ImageSerializer
+from .models import Product, Image
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_flex_fields.views import FlexFieldsMixin
+from rest_flex_fields.views import FlexFieldsMixin, FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
 
 
@@ -30,3 +30,9 @@ class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
             queryset = queryset.prefetch_related('sites__productsize')
 
         return queryset
+
+
+class ImageViewSet(FlexFieldsModelViewSet):
+
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()

@@ -1,6 +1,7 @@
 from rest_flex_fields import FlexFieldsModelSerializer
-from .models import Product, Category, Company, ProductSize, ProductSite, Comment
+from .models import Product, Category, Company, ProductSize, ProductSite, Comment, Image
 from django.contrib.auth.models import User
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
 class CompanySerializer(FlexFieldsModelSerializer):
@@ -32,6 +33,7 @@ class ProductSerializer(FlexFieldsModelSerializer):
             'category': ('reviews.CategorySerializer', {'many': True}),
             'sites': ('reviews.ProductSiteSerializer', {'many': True}),
             'comments': ('reviews.CommentSerializer', {'many': True}),
+            'image': ('reviews.ImageSerializer', {'many': True}),
         }
 
 
@@ -60,3 +62,13 @@ class CommentSerializer(FlexFieldsModelSerializer):
             'product': 'reviews.CategorySerializer',
             'user': 'reviews.UserSerializer'
         }
+
+
+class ImageSerializer(FlexFieldsModelSerializer):
+    image = VersatileImageFieldSerializer(
+        sizes='product_headshot'
+    )
+
+    class Meta:
+        model = Image
+        fields = ['pk', 'name', 'image']
