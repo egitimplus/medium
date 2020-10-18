@@ -2,6 +2,7 @@ from rest_flex_fields import FlexFieldsModelSerializer
 from .models import Product, Category, Company, ProductSize, ProductSite, Comment, Image
 from django.contrib.auth.models import User
 from versatileimagefield.serializers import VersatileImageFieldSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class CompanySerializer(FlexFieldsModelSerializer):
@@ -72,3 +73,16 @@ class ImageSerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Image
         fields = ['pk', 'name', 'image']
+
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        return token
+
