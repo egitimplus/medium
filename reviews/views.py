@@ -1,10 +1,9 @@
-from .serializers import ProductSerializer, ImageSerializer, MyTokenObtainPairSerializer
+from .serializers import ProductSerializer, ImageSerializer
 from .models import Product, Image
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_flex_fields.views import FlexFieldsMixin, FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
@@ -39,8 +38,3 @@ class ImageViewSet(FlexFieldsModelViewSet):
     serializer_class = ImageSerializer
     queryset = Image.objects.all()
     permission_classes = [IsAuthenticated]
-
-
-class MyObtainTokenPairView(TokenObtainPairView):
-    permission_classes = (AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
